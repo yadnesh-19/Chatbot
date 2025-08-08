@@ -1,6 +1,6 @@
 import openai
 
-openai.api_key = openai.openAI(api_key="AIzaSyCQiCnwV3WkMrD4Xkq1cAS6l_mAszUe094 ")
+openai.api_key = openai.openAI(api_key=" ")
 
 response = openai.ChatCompletion.create(
   model="gemini-2.5-flash",
@@ -11,3 +11,4 @@ response = openai.ChatCompletion.create(
 )
 
 print(response)
+
