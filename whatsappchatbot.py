@@ -3,32 +3,32 @@ import pyautogui
 import pyperclip
 import time
 
-# ====== CONFIG ======
-API_KEY = "AIzaSyAxLDh6vomjRwUA1ooHokZks4zoDdt81Ng"
+
+API_KEY = "Enter You API key here"
 genai.configure(api_key=API_KEY)
 
-# Initialize Gemini model with persona context
+
 persona = "You are Yadnesh, who speaks Hindi, English, and is a coder."
 model = genai.GenerativeModel("gemini-2.5-flash")
 chat = model.start_chat(
     history=[
-        {"role": "user", "parts": persona}   # ✅ Gemini only accepts 'user' or 'model'
+        {"role": "user", "parts": persona}   
     ]
 )
 
 print("✅ Chatbot ready! Type 'exit' in WhatsApp to quit.")
 
-previous_text = None   # Last clipboard content
-max_retries = 1        # Retry attempts when no new reply
-retry_interval = 2     # Seconds between retries
-timeout_retries = 0    # Current retry count
+previous_text = None   
+max_retries = 1       
+retry_interval = 2     
+timeout_retries = 0  
 
 # ====== MAIN LOOP ======
 while True:
     time.sleep(2)
 
-    # --- Select text (adjust coordinates for your screen) ---
-    pyautogui.click(x=1327, y=1168)       # Activate chat window
+   
+    pyautogui.click(x=1327, y=1168)     
     time.sleep(1)
     pyautogui.moveTo(667, 233)
     pyautogui.mouseDown()
@@ -36,20 +36,20 @@ while True:
     pyautogui.mouseUp()
     time.sleep(1)
 
-    # --- Copy selected text ---
+    
     pyautogui.hotkey('ctrl', 'c')
     time.sleep(0.5)
     chat_history = pyperclip.paste().strip()
 
     if chat_history.lower() == "exit":
-        print("🚪 Exiting chat...")
+        print(" Exiting chat...")
         break
 
     if chat_history != previous_text and chat_history != "":
         previous_text = chat_history
         timeout_retries = 0
 
-        print(f"\n[📋 Copied] {chat_history}")
+        print(f"\n[ Copied] {chat_history}")
 
         # --- Gemini Reply ---
         try:
@@ -68,11 +68,11 @@ while True:
             if not reply_text:
                 reply_text = "(No reply received from Gemini)"
 
-            print(f"[🤖 Gemini] {reply_text}")
+            print(f"[ Gemini] {reply_text}")
 
-            # --- Paste reply back into WhatsApp ---
+           
             pyperclip.copy(reply_text)
-            pyautogui.click(x=1613, y=1098)   # Click message input box
+            pyautogui.click(x=1613, y=1098)  
             time.sleep(0.5)
             pyautogui.hotkey('ctrl', 'v')
             time.sleep(0.5)
@@ -84,4 +84,5 @@ while True:
     else:
        timeout_retries += 1
        print("⚠️ No new text detected. Exiting...")
+
        break
